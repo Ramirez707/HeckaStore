@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HeckaStore</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/styles.css') }}"
+    />
+    <script
+      src="https://kit.fontawesome.com/e5e14bbee1.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <header>
+      <div class="navbar-container">
+        <div class="logo">
+          <a href="/"><h1>HeckaStore</h1></a>
+        </div>
+        <div class="search-container">
+          <input type="search" placeholder="Search for something..." />
+          <button class="search-button">
+            <i class="fa-solid fa-search"></i>
+          </button>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-buttons">
+          {% if current_user.is_authenticated %}
+          <!-- Signed-In User Navigation -->
+          <div class="nav-menu">
+            <ul>
+              <li>
+                <a href="{{ url_for('account') }}" title="Account">
+                  <i class="fa-solid fa-circle-user"></i>
+                  <span class="nav-text">Account</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{ url_for('cart') }}" title="Cart">
+                  <i class="fa-solid fa-cart-shopping"></i>
+                  <span class="nav-text">Cart</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{ url_for('logout') }}" title="Logout">
+                  <i class="fa-solid fa-right-from-bracket"></i>
+                  <span class="nav-text">Logout</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          {% else %}
+          <!-- Signed-Out User Navigation -->
+          <div class="nav-buttons">
+            <a href="{{ url_for('login') }}">Sign In</a>
+            <a href="{{ url_for('register') }}">Register</a>
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- For Mobile Responsiveness -->
+        <button class="hamburger-menu" aria-label="Toggle menu">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <main>
+      <section class="categories">
+        <div class="categories-container">
+          <h3>Categories</h3>
+          <div class="placeholder-categories">
+            <div class="category-item">
+              <a href="/category/art">
+                <div class="placeholder-category">
+                  <img src="{{ url_for('static', filename='category_images/category_art.png') }}" alt="Art Category">
+                </div>
+                <p class="category-label">Art</p>
+              </a>
+            </div>
+            <div class="category-item">
+              <a href="/category/ebooks">
+                <div class="placeholder-category">
+                  <img src="{{ url_for('static', filename='category_images/category_ebook.png') }}" alt="Ebook Category">
+                </div>
+                <p class="category-label">eBooks</p>
+              </a>
+            </div>
+            <div class="category-item">
+              <a href="/category/music">
+                <div class="placeholder-category">
+                  <img src="{{ url_for('static', filename='category_images/category_music.png') }}" alt="Music Category">
+                </div>
+                <p class="category-label">Music</p>
+              </a>
+            </div>
+            <div class="category-item">
+              <a href="/category/egiftcards">
+                <div class="placeholder-category">
+                  <img src="{{ url_for('static', filename='category_images/category_egiftcard.png') }}" alt="Gift Card Category">
+                </div>
+                <p class="category-label">eGiftcards</p>
+              </a>
+            </div>
+            <div class="category-item">
+              <a href="/category/pdfs">
+                <div class="placeholder-category">
+                  <img src="{{ url_for('static', filename='category_images/category_pdf.png') }}" alt="PDF Category">
+                </div>
+                <p class="category-label">PDFs</p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Placeholder content to demonstrate scrolling -->
+      <section class="products">
+        <div class="products-container">
+          {% include '_products.html' %}
+        </div>
+      </section>
+    </main>
+
+    <footer></footer>
+
+    <!-- External JavaScript Files -->
+    <script
+      defer
+      src="{{ url_for('static', filename='scripts/hamburger.js') }}"
+    ></script>
+    <script
+      defer
+      src="{{ url_for('static', filename='scripts/auth.js') }}"
+    ></script>
+    <script defer src="{{ url_for('static', filename='scripts/search.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='scripts/product.js') }}"></script>
+  </body>
+</html>

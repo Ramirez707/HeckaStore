@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HeckaStore</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/styles.css') }}"
+    />
+    <script
+      src="https://kit.fontawesome.com/e5e14bbee1.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <header>
+      <div class="navbar-container">
+        <div class="logo">
+          <a href="/"><h1>HeckaStore</h1></a>
+        </div>
+        <div class="search-container">
+          <input type="search" placeholder="Search for something..." />
+          <button class="search-button">
+            <i class="fa-solid fa-search"></i>
+          </button>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-buttons">
+          {% if current_user.is_authenticated %}
+          <!-- Signed-In User Navigation -->
+          <div class="nav-menu">
+            <ul>
+              <li>
+                <a href="{{ url_for('account') }}" title="Account">
+                  <i class="fa-solid fa-circle-user"></i>
+                  <span class="nav-text">Account</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{ url_for('cart') }}" title="Cart">
+                  <i class="fa-solid fa-cart-shopping"></i>
+                  <span class="nav-text">Cart</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{ url_for('logout') }}" title="Logout">
+                  <i class="fa-solid fa-right-from-bracket"></i>
+                  <span class="nav-text">Logout</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          {% else %}
+          <!-- Signed-Out User Navigation -->
+          <div class="nav-buttons">
+            <a href="{{ url_for('login') }}">Sign In</a>
+            <a href="{{ url_for('register') }}">Register</a>
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- For Mobile Responsiveness -->
+        <button class="hamburger-menu" aria-label="Toggle menu">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <main>
+      <div class="product-container">
+        <div class="product-gallery">
+          <div class="product-main-image">
+            <img src="{{ url_for('static', filename=product.image_path) }}" alt="Product Image" />
+          </div>
+          <!-- <div class="product-thumbnails">
+            <img src="https://via.placeholder.com/100x100" alt="Thumbnail 1" class="thumbnail active" />
+            <img src="https://via.placeholder.com/100x100" alt="Thumbnail 2" class="thumbnail" />
+            <img src="https://via.placeholder.com/100x100" alt="Thumbnail 3" class="thumbnail" />
+          </div> -->
+        </div>
+        <div class="product-details">
+          <div class="product-header">
+            <h1 class="product-title">{{ product.product_name }}</h1>
+          </div>
+          <div class="product-description">
+            <p>{{ product.description }}</p>
+          </div>
+          <div class="product-header">
+            <div class="product-price">${{ "%.2f"|format(product.price) }}</div>
+          </div>
+          <button class="add-to-cart-button" id="add-to-cart" data-product-id="{{ product.id }}">
+            <i class="fa-solid fa-cart-plus"></i> Add to Cart
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <footer></footer>
+
+    <!-- External JavaScript Files -->
+    <script defer src="{{ url_for('static', filename='scripts/hamburger.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='scripts/auth.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='scripts/product.js') }}"></script>
+  </body>
+</html>
